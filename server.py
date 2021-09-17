@@ -8,7 +8,7 @@ from socket import IPPROTO_TCP, SOL_SOCKET, SO_REUSEADDR
 from posix import abort
 import threading
 
-from configs import DEFAULT_PAGE, NOT_FOUND_PAGE, SERVER_PORT
+from configs import DEFAULT_PAGES, NOT_FOUND_PAGE, SERVER_PORT
 
 ## Metodos vistos em aula
 def getEnderecoHost(porta):
@@ -80,7 +80,7 @@ def handler(con, cliente):
         try:
             if path == '/':
                 ## Pagina default
-                with open(DEFAULT_PAGE, 'rb') as f:
+                with open(DEFAULT_PAGES[0], 'rb') as f:
                     body = f.read()
             else:
                 ## Requisicao de arquivo
@@ -118,7 +118,7 @@ def handler(con, cliente):
 
 
 def main():
-    if not (isinstance(SERVER_PORT,int)  and isinstance(DEFAULT_PAGE,str) and isinstance(NOT_FOUND_PAGE,str) and (SERVER_PORT == 8080 or SERVER_PORT == 80)):
+    if not (isinstance(SERVER_PORT,int)  and isinstance(DEFAULT_PAGES,list) and isinstance(NOT_FOUND_PAGE,str) and (SERVER_PORT == 8080 or SERVER_PORT == 80)):
         print("Erro no arquivo de configs")
         exit()
     endereco = getEnderecoHost(SERVER_PORT)
